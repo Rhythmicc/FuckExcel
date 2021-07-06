@@ -62,7 +62,27 @@ class FuckExcel:
 
     def __getitem__(self, item):
         if isinstance(item, tuple):
-            return self.sheet.cell(item[0], item[1]).value
+            item = list(item)
+            if isinstance(item[0], int):
+                if item[0] < 0:
+                    item[0] += self.sheet_size()[0] + 1
+                if isinstance(item[1], int):
+                    if item[1] < 0:
+                        item[1] += self.sheet_size()[1] + 1
+                    return self.sheet.cell(item[0], item[1]).value
+                else:
+                    start, stop = item[1].start if not item[1].start or item[1].start > 0 else self.sheet_size()[1] + 1 + item[1].start, item[1].stop if not item[1].stop or item[1].stop > 0 else self.sheet_size()[1] + 1 + item[1].stop
+                    return [self.sheet.cell(item[0], i).value for i in range(start if start else 1, stop if stop else self.sheet_size()[1] + 1, item[1].step if item[1].step else 1)]
+            else:
+                start0, stop0 = item[0].start if not item[0].start or item[0].start > 0 else self.sheet_size()[0] + 1 + item[0].start, item[0].stop if not item[0].stop or item[0].stop > 0 else self.sheet_size()[0] + 1 + item[0].stop
+                if isinstance(item[1], int):
+                    if item[1] < 0:
+                        item[1] += self.sheet_size()[1] + 1
+                    return [self.sheet.cell(i, item[1]).value for i in range(start0 if start0 else 1, stop0 if stop0 else self.sheet_size()[0] + 1, item[0].step if item[0].step else 1)]
+                else:
+                    start1, stop1 = item[1].start if not item[1].start or item[1].start > 0 else self.sheet_size()[1] + 1 + item[1].start, item[1].stop if not item[1].stop or item[1].stop > 0 else self.sheet_size()[1] + 1 + item[1].stop
+                    return [[self.sheet.cell(i, j).value for i in range(start0 if start0 else 1, stop0 if stop0 else self.sheet_size()[0] + 1, item[0].step if item[0].step else 1)]
+                            for j in range(start1 if start1 else 1, stop1 if stop1 else self.sheet_size()[1] + 1, item[1].step if item[1].step else 1)]
         else:
             raise IndexError('Index must be a tuple like (1, 1)')
 

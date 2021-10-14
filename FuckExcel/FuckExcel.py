@@ -40,23 +40,23 @@ class FuckExcel:
         if isinstance(key, tuple):
             if isinstance(key[0], int):
                 if isinstance(key[1], int):
-                    self.sheet.cell(key[0], key[1]).value = value
+                    self.sheet.cell(key[0], key[1]).value = value[0] if isinstance(value, list) else value
                 else:
                     for j in range(key[1].start if key[1].start else 1,
-                                   (key[1].stop if key[1].stop else self.sheet_size()[1]) + 1,
+                                   len(value) if isinstance(value, list) else (key[1].stop if key[1].stop else self.sheet_size()[1]) + 1,
                                    key[1].step if key[1].step else 1):
-                        self.sheet.cell(key[0], j).value = value
+                        self.sheet.cell(key[0], j).value = value[j] if isinstance(value, list) else value
             else:
                 for i in range(key[0].start if key[0].start else 1,
-                               (key[0].stop if key[0].stop else self.sheet_size()[0]) + 1,
+                               len(value) if isinstance(value, list) else (key[0].stop if key[0].stop else self.sheet_size()[0]) + 1,
                                key[0].step if key[0].step else 1):
                     if isinstance(key[1], int):
-                        self.sheet.cell(i, key[1]).value = value
+                        self.sheet.cell(i, key[1]).value = value[i] if isinstance(value, list) else value
                     else:
                         for j in range(key[1].start if key[1].start else 1,
-                                       (key[1].stop if key[1].stop else self.sheet_size()[1]) + 1,
+                                       len(value) if isinstance(value, list) else (key[1].stop if key[1].stop else self.sheet_size()[1]) + 1,
                                        key[1].step if key[1].step else 1):
-                            self.sheet.cell(i, j).value = value
+                            self.sheet.cell(i, j).value = value[j] if isinstance(value, list) else value
         else:
             raise IndexError('Index must be a tuple like (1, 1)')
 

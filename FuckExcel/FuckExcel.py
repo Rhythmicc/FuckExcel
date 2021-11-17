@@ -44,20 +44,20 @@ class FuckExcel:
                 else:
                     _stj = key[1].start if key[1].start else 1
                     for j in range(key[1].start if key[1].start else 1,
-                                   len(value) if isinstance(value, list) else (key[1].stop if key[1].stop else self.sheet_size()[1]) + 1,
+                                   len(value) + _stj if isinstance(value, list) else (key[1].stop if key[1].stop else self.sheet_size()[1]) + 1,
                                    key[1].step if key[1].step else 1):
                         self.sheet.cell(key[0], j).value = value[j - _stj] if isinstance(value, list) else value
             else:
                 _sti = key[0].start if key[0].start else 1
                 for i in range(key[0].start if key[0].start else 1,
-                               len(value) if isinstance(value, list) else (key[0].stop if key[0].stop else self.sheet_size()[0]) + 1,
+                               len(value) + _sti if isinstance(value, list) else (key[0].stop if key[0].stop else self.sheet_size()[0]) + 1,
                                key[0].step if key[0].step else 1):
                     if isinstance(key[1], int):
                         self.sheet.cell(i, key[1]).value = value[i - _sti] if isinstance(value, list) else value
                     else:
                         _stj = key[1].start if key[1].start else 1
                         for j in range(key[1].start if key[1].start else 1,
-                                       len(value) if isinstance(value, list) else (key[1].stop if key[1].stop else self.sheet_size()[1]) + 1,
+                                       len(value) + _stj if isinstance(value, list) else (key[1].stop if key[1].stop else self.sheet_size()[1]) + 1,
                                        key[1].step if key[1].step else 1):
                             self.sheet.cell(i, j).value = value[j - _stj] if isinstance(value, list) else value
         else:

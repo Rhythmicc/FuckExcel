@@ -17,7 +17,7 @@ setup(
     ],
     keywords='Excel',
     author='RhythmLian',
-    url="https://github.com/Rhythmicc/qs",
+    url="https://github.com/Rhythmicc/FuckExcel",
     license='MIT',
     packages=find_packages(),
     include_package_data=True,

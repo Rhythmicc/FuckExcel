@@ -5,6 +5,8 @@
 ## Install
 
 ```shell
+python3 setup.py install
+# 如果不起作用，则
 python3 setup.py sdist
 pip3 install dist/FuckExcel-0.0.1.tar.gz
 ```

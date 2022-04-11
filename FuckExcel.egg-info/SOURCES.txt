@@ -1,0 +1,12 @@
+LICENSE
+README.md
+setup.py
+FuckExcel/FuckExcel.py
+FuckExcel/FuckExcel_numba.py
+FuckExcel/__init__.py
+FuckExcel.egg-info/PKG-INFO
+FuckExcel.egg-info/SOURCES.txt
+FuckExcel.egg-info/dependency_links.txt
+FuckExcel.egg-info/requires.txt
+FuckExcel.egg-info/top_level.txt
+FuckExcel.egg-info/zip-safe

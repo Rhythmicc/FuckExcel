@@ -1,3 +1,18 @@
+Metadata-Version: 2.1
+Name: FuckExcel
+Version: 0.0.1
+Summary: Just Fuck Excel!
+Home-page: https://github.com/Rhythmicc/FuckExcel
+Author: RhythmLian
+License: MIT
+Keywords: Excel
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 # FuckExcel
 
 - Easier to operate excel.
@@ -5,8 +20,7 @@
 ## Install
 
 ```shell
-python3 setup.py sdist
-pip3 install dist/FuckExcel-0.0.1.tar.gz
+python3 setup.py install
 ```
 
 ## DEMO
@@ -33,4 +47,6 @@ fuck_excel = getFuckExcel('./A.xlsx', with_numba=True) # default with_numba is F
 fuck_excel[5:, 1] = [1, 2, 3, 4, 5]  # set [5][1]~[10][1] = [1, 2, 3, 4, 5]
 fuck_excel.save()
 ```
+
+
 

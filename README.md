@@ -12,9 +12,9 @@ pip3 install git+https://github.com/Rhythmicc/FuckExcel.git -U
 ### demo - 1
 
 ```python
-from FuckExcel import getFuckExcel
+from FuckExcel import FuckExcel
 
-fuck_excel = getFuckExcel('./A.xlsx', with_numba=True) # default with_numba is False
+fuck_excel = FuckExcel('./A.xlsx')
 fuck_excel[5:10, 5:10] = 'init' # or ['init', 'init', 'init', 'init', 'init']
 fuck_excel.save()
 ```
@@ -26,9 +26,9 @@ fuck_excel.save()
 ### demo - 2
 
 ```python
-from FuckExcel import getFuckExcel
+from FuckExcel import FuckExcel
 
-fuck_excel = getFuckExcel('./A.xlsx', with_numba=True) # default with_numba is False
+fuck_excel = FuckExcel('./A.xlsx') # default with_numba is False
 fuck_excel[5:, 1] = [1, 2, 3, 4, 5]  # set [5][1]~[10][1] = [1, 2, 3, 4, 5]
 fuck_excel.save()
 ```

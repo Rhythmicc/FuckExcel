@@ -3,14 +3,14 @@ from .__dependencies__ import *
 
 class FuckExcel:
     def __init__(self, excel_path):
-        self.file_path = os.path.abspath(excel_path.replace('~', user_root))
+        self.file_path = os.path.abspath(excel_path.replace("~", user_root))
         if os.path.exists(self.file_path):
             self.excel = openpyxl.load_workbook(self.file_path)
             self.sheet = self.excel.get_sheet_by_name(self.excel.get_sheet_names()[0])
         else:
             self.excel = openpyxl.Workbook()
             self.sheet = self.excel.active
-            self.sheet.title = 'Sheet1'
+            self.sheet.title = "Sheet1"
 
     def set_work_sheet(self, sheet_name):
         """
@@ -65,32 +65,49 @@ class FuckExcel:
         if isinstance(key, tuple):
             if isinstance(key[0], int):
                 if isinstance(key[1], int):
-                    self.sheet.cell(key[0], key[1]).value = value[0] if isinstance(value, list) else value
+                    self.sheet.cell(key[0], key[1]).value = (
+                        value[0] if isinstance(value, list) else value
+                    )
                 else:
                     _stj = key[1].start if key[1].start else 1
-                    for j in range(key[1].start if key[1].start else 1,
-                                   len(value) + _stj if isinstance(value, list) else (key[1].stop if key[1].stop else
-                                   self.sheet_size()[1]) + 1,
-                                   key[1].step if key[1].step else 1):
-                        self.sheet.cell(key[0], j).value = value[j - _stj] if isinstance(value, list) else value
+                    for j in range(
+                        key[1].start if key[1].start else 1,
+                        len(value) + _stj
+                        if isinstance(value, list)
+                        else (key[1].stop if key[1].stop else self.sheet_size()[1]) + 1,
+                        key[1].step if key[1].step else 1,
+                    ):
+                        self.sheet.cell(key[0], j).value = (
+                            value[j - _stj] if isinstance(value, list) else value
+                        )
             else:
                 _sti = key[0].start if key[0].start else 1
-                for i in range(key[0].start if key[0].start else 1,
-                               len(value) + _sti if isinstance(value, list) else (key[0].stop if key[0].stop else
-                               self.sheet_size()[0]) + 1,
-                               key[0].step if key[0].step else 1):
+                for i in range(
+                    key[0].start if key[0].start else 1,
+                    len(value) + _sti
+                    if isinstance(value, list)
+                    else (key[0].stop if key[0].stop else self.sheet_size()[0]) + 1,
+                    key[0].step if key[0].step else 1,
+                ):
                     if isinstance(key[1], int):
-                        self.sheet.cell(i, key[1]).value = value[i - _sti] if isinstance(value, list) else value
+                        self.sheet.cell(i, key[1]).value = (
+                            value[i - _sti] if isinstance(value, list) else value
+                        )
                     else:
                         _stj = key[1].start if key[1].start else 1
-                        for j in range(key[1].start if key[1].start else 1,
-                                       len(value) + _stj if isinstance(value, list) else (
-                                                                                         key[1].stop if key[1].stop else
-                                                                                         self.sheet_size()[1]) + 1,
-                                       key[1].step if key[1].step else 1):
-                            self.sheet.cell(i, j).value = value[j - _stj] if isinstance(value, list) else value
+                        for j in range(
+                            key[1].start if key[1].start else 1,
+                            len(value) + _stj
+                            if isinstance(value, list)
+                            else (key[1].stop if key[1].stop else self.sheet_size()[1])
+                            + 1,
+                            key[1].step if key[1].step else 1,
+                        ):
+                            self.sheet.cell(i, j).value = (
+                                value[j - _stj] if isinstance(value, list) else value
+                            )
         else:
-            raise IndexError('Index must be a tuple like (1, 1) or (1:10,1:10)')
+            raise IndexError("Index must be a tuple like (1, 1) or (1:10,1:10)")
 
     def __getitem__(self, item):
         if isinstance(item, tuple):
@@ -103,38 +120,68 @@ class FuckExcel:
                         item[1] += self.sheet_size()[1] + 1
                     return self.sheet.cell(item[0], item[1]).value
                 else:
-                    start, stop = item[1].start if not item[1].start or item[1].start > 0 else self.sheet_size()[
-                                                                                                   1] + 1 + item[
-                                                                                                   1].start, item[
-                                      1].stop if not item[1].stop or item[1].stop > 0 else self.sheet_size()[1] + 1 + \
-                                                                                           item[1].stop
-                    return [self.sheet.cell(item[0], i).value for i in
-                            range(start if start else 1, stop if stop else self.sheet_size()[1] + 1,
-                                  item[1].step if item[1].step else 1)]
+                    start, stop = (
+                        item[1].start
+                        if not item[1].start or item[1].start > 0
+                        else self.sheet_size()[1] + 1 + item[1].start,
+                        item[1].stop
+                        if not item[1].stop or item[1].stop > 0
+                        else self.sheet_size()[1] + 1 + item[1].stop,
+                    )
+                    return [
+                        self.sheet.cell(item[0], i).value
+                        for i in range(
+                            start if start else 1,
+                            stop if stop else self.sheet_size()[1] + 1,
+                            item[1].step if item[1].step else 1,
+                        )
+                    ]
             else:
-                start0, stop0 = item[0].start if not item[0].start or item[0].start > 0 else self.sheet_size()[0] + 1 + \
-                                                                                             item[0].start, item[
-                                    0].stop if not item[0].stop or item[0].stop > 0 else self.sheet_size()[0] + 1 + \
-                                                                                         item[0].stop
+                start0, stop0 = (
+                    item[0].start
+                    if not item[0].start or item[0].start > 0
+                    else self.sheet_size()[0] + 1 + item[0].start,
+                    item[0].stop
+                    if not item[0].stop or item[0].stop > 0
+                    else self.sheet_size()[0] + 1 + item[0].stop,
+                )
                 if isinstance(item[1], int):
                     if item[1] < 0:
                         item[1] += self.sheet_size()[1] + 1
-                    return [self.sheet.cell(i, item[1]).value for i in
-                            range(start0 if start0 else 1, stop0 if stop0 else self.sheet_size()[0] + 1,
-                                  item[0].step if item[0].step else 1)]
+                    return [
+                        self.sheet.cell(i, item[1]).value
+                        for i in range(
+                            start0 if start0 else 1,
+                            stop0 if stop0 else self.sheet_size()[0] + 1,
+                            item[0].step if item[0].step else 1,
+                        )
+                    ]
                 else:
-                    start1, stop1 = item[1].start if not item[1].start or item[1].start > 0 else self.sheet_size()[
-                                                                                                     1] + 1 + item[
-                                                                                                     1].start, item[
-                                        1].stop if not item[1].stop or item[1].stop > 0 else self.sheet_size()[1] + 1 + \
-                                                                                             item[1].stop
-                    return [[self.sheet.cell(i, j).value for i in
-                             range(start0 if start0 else 1, stop0 if stop0 else self.sheet_size()[0] + 1,
-                                   item[0].step if item[0].step else 1)]
-                            for j in range(start1 if start1 else 1, stop1 if stop1 else self.sheet_size()[1] + 1,
-                                           item[1].step if item[1].step else 1)]
+                    start1, stop1 = (
+                        item[1].start
+                        if not item[1].start or item[1].start > 0
+                        else self.sheet_size()[1] + 1 + item[1].start,
+                        item[1].stop
+                        if not item[1].stop or item[1].stop > 0
+                        else self.sheet_size()[1] + 1 + item[1].stop,
+                    )
+                    return [
+                        [
+                            self.sheet.cell(i, j).value
+                            for i in range(
+                                start0 if start0 else 1,
+                                stop0 if stop0 else self.sheet_size()[0] + 1,
+                                item[0].step if item[0].step else 1,
+                            )
+                        ]
+                        for j in range(
+                            start1 if start1 else 1,
+                            stop1 if stop1 else self.sheet_size()[1] + 1,
+                            item[1].step if item[1].step else 1,
+                        )
+                    ]
         else:
-            raise IndexError('Index must be a tuple like (1, 1)')
+            raise IndexError("Index must be a tuple like (1, 1)")
 
     def append_row(self, vals):
         """
@@ -145,7 +192,7 @@ class FuckExcel:
         """
         sz = self.sheet_size()
         for i, val in enumerate(vals):
-            self[sz[0], i + 1] = val
+            self[sz[0] + 1, i + 1] = val
 
     def append_column(self, vals):
         """
@@ -156,7 +203,7 @@ class FuckExcel:
         """
         sz = self.sheet_size()
         for i, val in enumerate(vals):
-            self[i + 1, sz[1]] = val
+            self[i + 1, sz[1] + 1] = val
 
     def push_back_row(self, row, value):
         """
@@ -166,7 +213,8 @@ class FuckExcel:
         :param value: 值
         :return:
         """
-        self[row, self.sheet_size()[1]] = value
+        indx = len(self[row, :]) + 1
+        self[row, indx] = value
 
     def push_back_colunm(self, column, value):
         """
@@ -176,7 +224,8 @@ class FuckExcel:
         :param value:  值
         :return:
         """
-        self[self.sheet_size()[0], column] = value
+        indx = len(self[:, column]) + 1
+        self[indx, column] = value
 
     def delete_row(self, row_num):
         """
